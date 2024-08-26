@@ -17,9 +17,12 @@
             padding: 10px 20px;
             font-size: 16px;
         }
-        #response {
+        #response, #prompt-display {
             margin-top: 20px;
-            white-space: pre-wrap; /* Preserve line breaks in the response */
+            white-space: pre-wrap; /* Preserve line breaks */
+        }
+        .prompt-section, .response-section {
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -27,7 +30,16 @@
     <h1>Chat with GPT-3</h1>
     <textarea id="prompt" rows="4" placeholder="Enter your prompt here..."></textarea><br>
     <button onclick="getGPT3Response()">Send</button>
-    <p id="response"></p>
+    
+    <div class="prompt-section">
+        <h2>Prompt Sent:</h2>
+        <p id="prompt-display"></p>
+    </div>
+    
+    <div class="response-section">
+        <h2>GPT-3 Response:</h2>
+        <p id="response"></p>
+    </div>
 
     <script>
         async function getGPT3Response() {
@@ -36,6 +48,9 @@
                 alert("Please enter a prompt.");
                 return;
             }
+
+            // Display the prompt that will be sent to the API
+            document.getElementById("prompt-display").innerText = prompt;
 
             try {
                 const response = await fetch("https://api.openai.com/v1/completions", {
